@@ -56,8 +56,8 @@ class Game:
 
             # Generating boxes
             if fcount % self._gamespeed == 0:
-                self._blue_boxes = [i for i in self._blue_boxes if i[1] - fcount <= self._gamespeed * 2]
-                self._red_boxes = [i for i in self._red_boxes if i[1] - fcount <= self._gamespeed * 2]
+                self._blue_boxes = [i for i in self._blue_boxes if abs(i[1] - fcount) <= self._gamespeed]
+                self._red_boxes = [i for i in self._red_boxes if abs(i[1] - fcount) <= self._gamespeed]
                 self.__create_boxes(fcount)
 
             self.__check_lhand_hit(lhand)
@@ -109,16 +109,26 @@ class Game:
             if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) != 0:
                 self._score += self._gamespeed - box[1] % self._gamespeed
                 self._blue_boxes.remove(box)
+            
+        for box in self._red_boxes:
+            if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) != 0:
+                self._score -= self._gamespeed
+                self._red_boxes.remove(box)
 
-        self._score += sum([i[1] for i in self._blue_boxes if len(i[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) != 0])
-        self._blue_boxes = [i for i in self._blue_boxes if len(i[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) == 0]
 
     def __check_rhand_hit(self, rhand) -> None:
         '''
         Deleting any boxes if they were hit
         '''
-        self._score += sum([i[1] for i in self._red_boxes if len(i[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) != 0])
-        self._red_boxes = [i for i in self._red_boxes if len(i[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) == 0]
+        for box in self._red_boxes:
+            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) != 0:
+                self._score += self._gamespeed - box[1] % self._gamespeed
+                self._red_boxes.remove(box)
+
+        for box in self._blue_boxes:
+            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) != 0:
+                self._score -= self._gamespeed
+                self._blue_boxes.remove(box)
 
     def __dist_points(self, p1: Tuple[int, int], p2: Tuple[int, int]) -> float:
         '''
