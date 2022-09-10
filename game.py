@@ -55,7 +55,7 @@ class Game:
             lhand, rhand = self.__get_point_data()
 
             # Generating boxes
-            if fcount % self._gamespeed == 0:
+            if fcount % self._gamespeed == 0 or (self._blue_boxes == [] and self._red_boxes == []):
                 self._blue_boxes = [i for i in self._blue_boxes if abs(i[1] - fcount) <= self._gamespeed]
                 self._red_boxes = [i for i in self._red_boxes if abs(i[1] - fcount) <= self._gamespeed]
                 self.__create_boxes(fcount)
