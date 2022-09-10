@@ -6,6 +6,7 @@ beat your python anywhere!
 ## Dependencies
 - mediapipe
 - pygame
+- opencv
 
 ## How to play
 You use your left and right hand as swords, like in beat saber. Use your blue
