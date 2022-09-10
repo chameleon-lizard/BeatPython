@@ -14,7 +14,7 @@ class Game:
         pg.init()
         pg.font.init()
         random.seed(None)
-        self._font = pg.font.SysFont('Noto Sans', 10)
+        self._font = pg.font.SysFont('Noto Sans', 30)
 
         # Set screen size
         self._imsize = (1280, 720)
@@ -106,12 +106,12 @@ class Game:
         Deleting any boxes if they were hit
         '''
         for box in self._blue_boxes:
-            if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) != 0:
+            if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][1])) != 0:
                 self._score += self._gamespeed - box[1] % self._gamespeed
                 self._blue_boxes.remove(box)
             
         for box in self._red_boxes:
-            if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][0])) != 0:
+            if len(box[0].clipline(lhand[0][0], lhand[0][1], lhand[1][0], lhand[1][1])) != 0:
                 self._score -= self._gamespeed
                 self._red_boxes.remove(box)
 
@@ -121,12 +121,12 @@ class Game:
         Deleting any boxes if they were hit
         '''
         for box in self._red_boxes:
-            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) != 0:
+            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][1])) != 0:
                 self._score += self._gamespeed - box[1] % self._gamespeed
                 self._red_boxes.remove(box)
 
         for box in self._blue_boxes:
-            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][0])) != 0:
+            if len(box[0].clipline(rhand[0][0], rhand[0][1], rhand[1][0], rhand[1][1])) != 0:
                 self._score -= self._gamespeed
                 self._blue_boxes.remove(box)
 
