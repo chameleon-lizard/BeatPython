@@ -17,3 +17,5 @@ from square spawn.
 
 If you move away from the camera, the game will crash, lol. Also, for some reason
 it flips my view sometimes on Nvidia KDE Manjaro.
+
+[![Demo CountPages alpha](https://chameleon-lizard.ru/p/game.gif)](https://chameleon-lizard.ru/p/game.gif)
