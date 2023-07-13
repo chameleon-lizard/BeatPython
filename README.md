@@ -10,10 +10,10 @@ beat your python anywhere!
 
 ## How to play
 You use your left and right hand as swords, like in beat saber. Use your blue
-hand to break the blur squares and the red hand to break the red squares.
+hand to break the blue squares and the red hand to break the red squares.
 
 Squares will disappear after some time. If you break a square with a wrong hand,
-you get -100 points, if right - you get +(100 - t) points, where t is the time 
+you get `-100` points, if right - you get `+(100 - t)` points, where `t` is the time 
 from square spawn.
 
 ## Known issues
