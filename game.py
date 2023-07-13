@@ -165,7 +165,7 @@ class Game:
                     int(landmark.z * self._imsize[0])
             )
 
-    def __get_point_data(self) -> Tuple[Tuple[int, int], Tuple[int, int]]:
+    def __get_point_data(self) -> Tuple[Tuple[Tuple[int, int, int], Tuple[int, int, int]], Tuple[Tuple[int, int, int], Tuple[int, int, int]]]:
         '''
         Functions that gets the point data of both hands.
         '''
