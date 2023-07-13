@@ -38,6 +38,10 @@ class Game:
         # Creating variables
         self._gamespeed = gamespeed
         self._box_size = self._imsize[0] // 10
+
+        # Hand position tracking
+        self._track_status = True
+        self._lhand = self._rhand = (0, 0), (0, 0)
         
     def run(self) -> None:
         '''
@@ -52,7 +56,12 @@ class Game:
                     running = False
             
             # Acquiring keypoints from the camera stream
-            lhand, rhand = self.__get_point_data()
+
+            try:
+                self._lhand, self._rhand = self.__get_point_data()
+                self._track_status = True
+            except AttributeError:
+                self._track_status = False
 
             # Generating boxes
             if fcount % self._gamespeed == 0 or (self._blue_boxes == [] and self._red_boxes == []):
@@ -60,11 +69,11 @@ class Game:
                 self._red_boxes = [i for i in self._red_boxes if abs(i[1] - fcount) <= self._gamespeed]
                 self.__create_boxes(fcount)
 
-            self.__check_lhand_hit(lhand)
-            self.__check_rhand_hit(rhand)
+            self.__check_lhand_hit(self._lhand)
+            self.__check_rhand_hit(self._rhand)
 
             # Draw stuff
-            self.__draw(lhand, rhand)
+            self.__draw(self._lhand, self._rhand, self._track_status)
 
             # Flip the display
             pg.display.flip()
@@ -72,7 +81,7 @@ class Game:
             # Increasing the frame counter
             fcount += 1
     
-    def __draw(self, lhand, rhand) -> None:
+    def __draw(self, lhand, rhand, track_status) -> None:
         '''
         Draw the graphics for the playing field.
         '''
@@ -100,6 +109,9 @@ class Game:
         score = self._font.render(f'{self._score}', False, (0, 0, 0))
         self._screen.blit(score, (50, 50))
 
+        if not track_status:
+            tracking_error = self._font.render(f'No hands detected', False, (255, 0, 0))
+            self._screen.blit(tracking_error, (50, 75))
 
     def __check_lhand_hit(self, lhand) -> None:
         '''
